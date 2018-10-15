@@ -1,6 +1,6 @@
 # IMDB API
 
-## How to run
+## How to run app
 
 ### Using Pipenv
 
@@ -41,3 +41,7 @@ Please note that if no pagination parameters are set, there is no constraints an
 - `/names` - returns names matching given params. For each name which has any titles, returns them in field `knownForTitles`
 
   E.g. request to `/names?primaryName=Fred&birthYear=1899&deathYear=1987` should return Fred Astaire and his movies.
+
+## Download and import data
+
+Use `download_tsv.py` to download tsv files, then import them to db using `import_tsv_files`. These scripts require installed dependencies and set up database.
