@@ -35,6 +35,19 @@ class Title(Base):
         back_populates='knownForTitles'
     )
 
+    def to_dict(self):
+        return {
+            'tconst': self.tconst,
+            'titleType': self.titleType,
+            'primaryTitle': self.primaryTitle,
+            'originalTitle': self.originalTitle,
+            'isAdult': self.isAdult,
+            'startYear': self.startYear,
+            'endYear': self.endYear,
+            'runtimeMinutes': self.runtimeMinutes,
+            'genres': self.genres.split(','),
+        }
+
 
 class Name(Base):
     __tablename__ = 'names'
@@ -48,3 +61,12 @@ class Name(Base):
         secondary=title_to_name_table,
         back_populates='knownPeople'
     )
+
+    def to_dict(self):
+        return {
+            'nconst': self.nconst,
+            'primaryName': self.primaryName,
+            'birthYear': self.birthYear,
+            'deathYear': self.deathYear,
+            'primaryProfession': self.primaryProfession.split(',')
+        }

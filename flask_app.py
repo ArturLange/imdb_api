@@ -1,4 +1,4 @@
-from flask import Flask, jsonify
+from flask import Flask, jsonify, request
 
 from database import init_db
 from models import Base, Name, Title
@@ -6,23 +6,22 @@ from models import Base, Name, Title
 app = Flask(__name__)
 
 
+@app.route('/year/<int:startYear>/titles', methods=['GET'])
+def get_titles_from_year(startYear):
+    titles = Title.query.filter(Title.startYear == int(startYear))
+    return jsonify(
+        [
+            title.to_dict() for title in titles
+        ]
+    )
+
 
 @app.route('/titles', methods=['GET'])
 def get_titles():
     titles = Title.query.all()
     return jsonify(
         [
-            {
-                'tconst': title.tconst,
-                'titleType': title.titleType,
-                'primaryTitle': title.primaryTitle,
-                'originalTitle': title.originalTitle,
-                'isAdult': title.isAdult,
-                'startYear': title.startYear,
-                'endYear': title.endYear,
-                'runtimeMinutes': title.runtimeMinutes,
-                'genres': title.genres.split(','),
-            } for title in titles
+            title.to_dict() for title in titles
         ]
     )
 
@@ -32,13 +31,7 @@ def get_names():
     names = Name.query.all()
     return jsonify(
         [
-            {
-                'nconst': name.nconst,
-                'primaryName': name.primaryName,
-                'birthYear': name.birthYear,
-                'deathYear': name.deathYear,
-                'primaryProfession': name.primaryProfession.split(',')
-            } for name in names
+            name.to_dict() for name in names
         ]
     )
 
