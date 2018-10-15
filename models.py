@@ -45,9 +45,13 @@ class Title(Base):
             'startYear': self.startYear,
             'endYear': self.endYear,
             'runtimeMinutes': self.runtimeMinutes,
-            'genres': self.genres.split(',') if self.genres else [],
-            'knownPeople': [name.to_dict() for name in self.knownPeople]
+            'genres': self.genres.split(',') if self.genres else []
         }
+
+    def to_dict_related(self):
+        result = self.to_dict()
+        result['knownPeople'] = [name.to_dict() for name in self.knownPeople]
+        return result
 
 
 class Name(Base):
@@ -69,5 +73,11 @@ class Name(Base):
             'primaryName': self.primaryName,
             'birthYear': self.birthYear,
             'deathYear': self.deathYear,
-            'primaryProfession': self.primaryProfession.split(',') if self.primaryProfession else []
+            'primaryProfession': self.primaryProfession.split(',') if self.primaryProfession else [],
         }
+
+    def to_dict_related(self):
+        result = self.to_dict()
+        result['knownForTitles'] = [title.to_dict()
+                                    for title in self.knownForTitles]
+        return result

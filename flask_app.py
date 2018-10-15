@@ -21,14 +21,14 @@ def get_titles_from_year(startYear):
             titles = titles.offset((int(page)-1) * int(maxResults))
     return jsonify(
         [
-            title.to_dict() for title in titles
+            title.to_dict_related() for title in titles
         ]
     )
 
 
 @app.route('/names', methods=["GET"])
 def get_people_and_their_titles():
-    names = Name.query
+    names = Name.query.order_by(Name.primaryName)
 
     primaryName = request.args.get('primaryName')
     birthYear = request.args.get('birthYear')
@@ -55,7 +55,7 @@ def get_people_and_their_titles():
 
     return jsonify(
         [
-            name.to_dict() for name in names.order_by(Name.primaryName)
+            name.to_dict_related() for name in names
         ]
     )
 
