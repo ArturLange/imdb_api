@@ -46,6 +46,7 @@ class Title(Base):
             'endYear': self.endYear,
             'runtimeMinutes': self.runtimeMinutes,
             'genres': self.genres.split(','),
+            'knownPeople': self.knownPeople
         }
 
 

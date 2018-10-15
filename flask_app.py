@@ -8,10 +8,17 @@ app = Flask(__name__)
 
 @app.route('/year/<int:startYear>/titles', methods=['GET'])
 def get_titles_from_year(startYear):
-    titles = Title.query.filter(Title.startYear == int(startYear)).order_by(Title.primaryTitle)
+    titles = Title.query.filter(Title.startYear == int(
+        startYear)).order_by(Title.primaryTitle)
     genre = request.args.get('genre')
+    maxResults = request.args.get('maxResults')
+    page = request.args.get('page')
     if genre:
         titles = titles.filter(Title.genres.ilike(f'%{genre}%'))
+    if maxResults:
+        titles = titles.limit(maxResults)
+        if page:
+            titles = titles.offset((int(page)-1) * int(maxResults))
     return jsonify(
         [
             title.to_dict() for title in titles
