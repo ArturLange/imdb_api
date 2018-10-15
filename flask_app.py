@@ -31,7 +31,18 @@ def get_titles():
 
 @app.route('/names', methods=['GET'])
 def get_names():
-    return jsonify(Name.query.all())
+    names = [Name.query.first()]
+    return jsonify(
+        [
+            {
+                'nconst': name.nconst,
+                'primaryName': name.primaryName,
+                'birthYear': name.birthYear,
+                'deathYear': name.deathYear,
+                'primaryProfession': name.primaryProfession.split(',')
+            } for name in names
+        ]
+    )
 
 
 if __name__ == "__main__":
