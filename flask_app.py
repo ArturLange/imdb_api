@@ -1,5 +1,5 @@
 from flask import Flask, jsonify
-from models import Base, Title
+from models import Base, Title, Name
 from sqlalchemy import create_engine
 from sqlalchemy.orm import scoped_session, sessionmaker
 
@@ -27,6 +27,11 @@ def init_db():
 @app.route('/titles', methods=['GET'])
 def get_titles():
     return jsonify(Title.query.all())
+
+
+@app.route('/names', methods=['GET'])
+def get_names():
+    return jsonify(Name.query.all())
 
 
 if __name__ == "__main__":
