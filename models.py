@@ -45,8 +45,8 @@ class Title(Base):
             'startYear': self.startYear,
             'endYear': self.endYear,
             'runtimeMinutes': self.runtimeMinutes,
-            'genres': self.genres.split(','),
-            'knownPeople': self.knownPeople
+            'genres': self.genres.split(',') if self.genres else [],
+            'knownPeople': [name.to_dict() for name in self.knownPeople]
         }
 
 
@@ -69,5 +69,5 @@ class Name(Base):
             'primaryName': self.primaryName,
             'birthYear': self.birthYear,
             'deathYear': self.deathYear,
-            'primaryProfession': self.primaryProfession.split(',')
+            'primaryProfession': self.primaryProfession.split(',') if self.primaryProfession else []
         }

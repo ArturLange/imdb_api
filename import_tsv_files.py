@@ -8,7 +8,7 @@ def map_null(value: str):
     return value if value != '\\N' else None
 
 
-def insert_names_into_db(batch_size: int = 100, limit: int = 300):
+def insert_names_into_db(batch_size: int = 10000, limit: int = 50000):
     with open('name.basics.tsv') as names_tsv:
         names_tsv.readline()
         reader = csv.reader(names_tsv, delimiter='\t')
@@ -24,7 +24,7 @@ def insert_names_into_db(batch_size: int = 100, limit: int = 300):
                 names = []
                 counter += batch_size
                 print(f'added {counter} names')
-                if counter > limit:
+                if limit and counter >= limit:
                     return
             row = list(map(map_null, row))
             name = Name(
@@ -34,14 +34,15 @@ def insert_names_into_db(batch_size: int = 100, limit: int = 300):
                 deathYear=row[3],
                 primaryProfession=row[4],
             )
-            titles = Title.query.filter(Title.tconst.in_(row[5].split(',')))
+            if row[5]:
+                titles = Title.query.filter(Title.tconst.in_(row[5].split(',')))
             name.knownForTitles = list(titles)
             names.append(name)
             number_in_batch += 1
         db_session.commit()
 
 
-def insert_titles_into_db(batch_size: int = 100, limit: int = 300):
+def insert_titles_into_db(batch_size: int = 10000, limit: int = 50000):
     with open('title.basics.tsv') as titles_tsv:
         titles_tsv.readline()
         reader = csv.reader(titles_tsv, delimiter='\t')
@@ -57,7 +58,7 @@ def insert_titles_into_db(batch_size: int = 100, limit: int = 300):
                 titles = []
                 counter += batch_size
                 print(f'added {counter} titles')
-                if counter > limit:
+                if limit and counter >= limit:
                     return
             row = list(map(map_null, row))
             title = Title(
