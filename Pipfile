@@ -9,10 +9,10 @@ pylint = "*"
 rope = "*"
 
 [packages]
-requests = "*"
-sqlalchemy = "*"
-flask = "*"
-"psycopg2" = "*"
+requests = "==2.19.1"
+sqlalchemy = "==1.2.12"
+flask = "==1.0.2"
+"psycopg2" = "==2.7.5"
 
 [requires]
 python_version = "3.7"
@@ -20,3 +20,4 @@ python_version = "3.7"
 [scripts]
 start_db = "docker run -p 5432:5432 --name imdb-postgres -e POSTGRES_PASSWORD=mysecretpassword -d postgres:10"
 delete_db = "docker rm -f imdb-postgres"
+app = "python flask_app.py"
