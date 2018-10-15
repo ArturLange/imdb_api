@@ -17,8 +17,8 @@ class Title(Base):
     primaryTitle = Column(String)
     originalTitle = Column(String)
     isAdult = Column(Boolean)
-    startYear = Column(Date)
-    endYear = Column(Date)
+    startYear = Column(Integer)
+    endYear = Column(Integer)
     runtimeMinutes = Column(Integer)
     genres = Column(String)
     knownPeople = relationship(
@@ -32,8 +32,8 @@ class Name(Base):
     __tablename__ = 'names'
     nconst = Column(String, primary_key=True)
     primaryName = Column(String)
-    birthYear = Column(Date)
-    deathYear = Column(Date)
+    birthYear = Column(Integer)
+    deathYear = Column(Integer)
     primaryProfession = Column(String)
     knownForTitles = relationship(
         "Title",
