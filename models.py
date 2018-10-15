@@ -1,6 +1,14 @@
-from sqlalchemy import Boolean, Column, Date, Integer, String, ForeignKey, Table
-
+from sqlalchemy import (
+    Boolean,
+    Column,
+    Date,
+    ForeignKey,
+    Integer,
+    String,
+    Table
+)
 from sqlalchemy.orm import relationship
+
 from database import Base
 
 title_to_name_table = Table(
