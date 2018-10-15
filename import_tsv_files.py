@@ -8,7 +8,7 @@ def map_null(value: str):
     return value if value != '\\N' else None
 
 
-def insert_names_into_db(batch_size: int = 10000, limit: int = 50000):
+def insert_names_into_db(batch_size: int = 10000, limit: int = 200000):
     with open('name.basics.tsv') as names_tsv:
         names_tsv.readline()
         reader = csv.reader(names_tsv, delimiter='\t')
@@ -42,7 +42,7 @@ def insert_names_into_db(batch_size: int = 10000, limit: int = 50000):
         db_session.commit()
 
 
-def insert_titles_into_db(batch_size: int = 10000, limit: int = 50000):
+def insert_titles_into_db(batch_size: int = 10000, limit: int = 200000):
     with open('title.basics.tsv') as titles_tsv:
         titles_tsv.readline()
         reader = csv.reader(titles_tsv, delimiter='\t')
@@ -66,7 +66,7 @@ def insert_titles_into_db(batch_size: int = 10000, limit: int = 50000):
                 titleType=row[1],
                 primaryTitle=row[2],
                 originalTitle=row[3],
-                isAdult=bool(row[4]),
+                isAdult=bool(int(row[4])),
                 startYear=row[5],
                 endYear=row[6],
                 runtimeMinutes=row[7],

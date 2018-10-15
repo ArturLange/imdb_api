@@ -9,7 +9,7 @@ pylint = "*"
 rope = "*"
 
 [packages]
-requests = "==2.19.1"
+requests = "==2.20.0"
 sqlalchemy = "==1.2.12"
 flask = "==1.0.2"
 "psycopg2" = "==2.7.5"
