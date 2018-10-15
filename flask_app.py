@@ -1,6 +1,4 @@
 from flask import Flask, jsonify
-from sqlalchemy import create_engine
-from sqlalchemy.orm import scoped_session, sessionmaker
 
 from database import init_db
 from models import Base, Name, Title
@@ -11,7 +9,22 @@ app = Flask(__name__)
 
 @app.route('/titles', methods=['GET'])
 def get_titles():
-    return jsonify(Title.query.all())
+    titles = Title.query.all()
+    return jsonify(
+        [
+            {
+                'tconst': title.tconst,
+                'titleType': title.titleType,
+                'primaryTitle': title.primaryTitle,
+                'originalTitle': title.originalTitle,
+                'isAdult': title.isAdult,
+                'startYear': title.startYear,
+                'endYear': title.endYear,
+                'runtimeMinutes': title.runtimeMinutes,
+                'genres': title.genres.split(','),
+            } for title in titles
+        ]
+    )
 
 
 @app.route('/names', methods=['GET'])
