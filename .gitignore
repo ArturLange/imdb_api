@@ -1,1 +1,4 @@
 *.basics.tsv*
+
+# SQLite DB
+*.db

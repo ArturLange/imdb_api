@@ -2,7 +2,7 @@ import csv
 
 from database import db_session, init_db
 from models import Name, Title
-
+from tqdm import tqdm
 
 def map_null(value: str):
     return value if value != '\\N' else None
@@ -16,7 +16,7 @@ def insert_names_into_db(batch_size: int = 10000, limit: int = 200000):
 
         names = []
         number_in_batch = 0
-        for row in reader:
+        for row in tqdm(reader):
             if number_in_batch > batch_size:
                 number_in_batch = 0
                 db_session.add_all(names)
@@ -50,7 +50,7 @@ def insert_titles_into_db(batch_size: int = 10000, limit: int = 200000):
 
         titles = []
         number_in_batch = 0
-        for row in reader:
+        for row in tqdm(reader):
             if number_in_batch > batch_size:
                 number_in_batch = 0
                 db_session.add_all(titles)

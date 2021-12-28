@@ -2,7 +2,8 @@ from sqlalchemy import create_engine
 from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import scoped_session, sessionmaker
 
-engine = create_engine('postgresql+psycopg2://postgres:mysecretpassword@localhost:5432', convert_unicode=True)
+engine = create_engine('sqlite:///foo.db')
+# engine = create_engine('postgresql+psycopg2://postgres:mysecretpassword@localhost:5432', convert_unicode=True)
 db_session = scoped_session(sessionmaker(autocommit=False,
                                          autoflush=False,
                                          bind=engine))
